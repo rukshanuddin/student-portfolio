@@ -1,1 +1,13 @@
-<h1>This is the Model's index page.</h1>
+<h1> Projects </h1>
+<p> Welcome, <%= current_user.firstname %>
+
+<% @projects.each do |project| %>
+  <h2> <%= project.title%></h2>
+  <h3> <%= project.module%></h3>
+  <div>
+    <%= project.description %>
+    <br>
+    <a> <%project.github%> </a>
+  </div>
+  <br><br><br>
+<% end %>

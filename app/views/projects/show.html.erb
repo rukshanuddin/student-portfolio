@@ -1,1 +1,12 @@
-<h1>This is the show page for an individual instance of your model.</h1>
+<h1><%= @project.title %></h1>
+<h3><%= @project.module%></h3>
+<br><br>
+<p><%= @project.description %></p>
+<p><a><%= @project.github%></a></p>
+
+<form method="post" action="/projects/<%=@project.id%>/delete">
+  <input id="hidden" type="hidden" name="_method" value="DELETE">
+  <input type="submit" value="Delete Project">
+</form>
+
+<a href="/projects/<%=@project.id%>/edit">Edit Project </a>
