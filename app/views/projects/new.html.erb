@@ -1,1 +1,14 @@
-<h1>Insert the form to create a new instance of your model.</h1>
+<h1>New Project</h1>
+    <h2>I want all the juicy details</h2>
+    <form method="post" action="/projects">
+      <h3>Project Title:</h3><br>
+      <input type="text" name="title" placeholder="Title"><br><br>
+      <h3>Module:</h3><br>
+      <p style='font-size:10px'>Enter Ruby, Sinatra, Rails, etc...<p>
+      <input type="text" name="module" placeholder="Module"><br><br>
+      <h3>Project Github Link</h3><br>
+      <input type="text" name="github" placeholder="Link to repository"><br><br>
+      <h3>Description</h3><br>
+      <textarea rows="4" cols="50" type="text" name="description" placeholder="Enter a brief description"></textarea><br><br>
+      <input type="submit">
+    </form>
