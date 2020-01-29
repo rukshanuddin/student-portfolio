@@ -4,7 +4,7 @@ class UsersController < ApplicationController
     if !logged_in?
       erb :'users/new.html', locals: {message: "Please sign up before you sign in"}
     else
-      redirect to '/projects'
+      redirect to '/users/index.html'
     end
   end
 
@@ -16,7 +16,7 @@ class UsersController < ApplicationController
       @user = User.new(:firstname => params[:firstname], :lastname => params[:lastname], :username => params[:username], :password => params[:password])
       @user.save
       session[:user_id] = @user.id
-      redirect to '/projects'
+      erb :"users/index.html"
     end
   end
 
