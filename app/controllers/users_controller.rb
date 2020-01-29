@@ -1,8 +1,23 @@
 class UsersController < ApplicationController
 
-  # GET: /users
-  get "/users" do
-    erb :"/users/index.html"
+  get '/signup' do
+    if !logged_in?
+      erb :'users/new.html', locals: {message: "Please sign up before you sign in"}
+    else
+      redirect to '/projects'
+    end
+  end
+
+  post '/signup' do
+    if params[:username] == "" || params[:email] == "" || params[:password] == ""
+      redirect to '/signup'
+    else
+      binding.pry
+      @user = User.new(:firstname => params[:firstname], :lastname => params[:lastname], :username => params[:username], :password => params[:password])
+      @user.save
+      session[:user_id] = @user.id
+      redirect to '/projects'
+    end
   end
 
   # GET: /users/new
