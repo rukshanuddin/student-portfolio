@@ -1,26 +1,39 @@
 class UsersController < ApplicationController
 
-  get '/users/:slug' do
-    @user = User.find_by_slug(params[:slug])
-    erb :'users/show'
+  get '/users' do
+    if logged_in?
+      @projects = Project.all
+      erb :'users/all'
+    else
+      redirect to '/login'
+    end
   end
 
   get '/signup' do
     if !logged_in?
       erb :'users/new.html', locals: {message: "Please sign up before you sign in"}
     else
-      redirect to '/users/index.html'
+      redirect to '/home'
+    end
+  end
+
+  get '/home' do
+    if !logged_in?
+      redirect to '/login'
+    else
+      @user = current_user
+      erb :'users/index.html'
     end
   end
 
   post '/signup' do
-    if params[:firstname] == "" || params[:lastname] == "" || params[:username] == "" || params[:password] == ""
+    if params[:firstname] == "" || params[:lastname] == "" || params[:username] == "" || params[:password] == "" || User.find_by(:username => params[:username])
       redirect to '/signup'
     else
       @user = User.new(:firstname => params[:firstname], :lastname => params[:lastname], :username => params[:username], :password => params[:password])
       @user.save
       session[:user_id] = @user.id
-      erb :"users/index.html"
+      redirect to '/home'
     end
   end
 
@@ -29,7 +42,7 @@ class UsersController < ApplicationController
     if !logged_in?
       erb :'users/login'
     else
-      redirect to '/tweets'
+      redirect to '/home'
     end
   end
 
@@ -37,9 +50,9 @@ class UsersController < ApplicationController
     user = User.find_by(:username => params[:username])
     if user && user.authenticate(params[:password])
       session[:user_id] = user.id
-      redirect to "/tweets"
+      redirect to '/home'
     else
-      redirect to '/signup'
+      redirect to '/login'
     end
   end
 

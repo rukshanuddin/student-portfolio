@@ -1,7 +1,6 @@
 class ProjectsController < ApplicationController
   get '/projects' do
     if logged_in?
-      @projects = Project.all
       erb :'projects/index.html'
     else
       redirect to '/login'
@@ -23,7 +22,6 @@ class ProjectsController < ApplicationController
       else
         
         @project = Project.create(:title => params[:title], :module => params[:module], :github => params[:github], :description => params[:description], :user_id => current_user.id)
-        binding.pry
         if @project.save
           redirect to "/projects/#{@project.id}"
         else
@@ -38,6 +36,7 @@ class ProjectsController < ApplicationController
   get '/projects/:id' do
     if logged_in?
       @project = Project.find_by_id(params[:id])
+      redirect to '/projects' if @project == nil
       erb :'projects/show.html'
     else
       redirect to '/login'
@@ -59,7 +58,7 @@ class ProjectsController < ApplicationController
 
   patch '/projects/:id' do
     if logged_in?
-      if params[:content] == ""
+      if params[:title] == ""
         redirect to "/projects/#{params[:id]}/edit"
       else
         @project = Project.find_by_id(params[:id])
@@ -78,13 +77,15 @@ class ProjectsController < ApplicationController
     end
   end
 
+
   delete '/projects/:id/delete' do
     if logged_in?
+      
       @project = Project.find_by_id(params[:id])
       if @project && @project.user == current_user
         @project.delete
       end
-      redirect to '/project'
+      redirect to '/projects'
     else
       redirect to '/login'
     end

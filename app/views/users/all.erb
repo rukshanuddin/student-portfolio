@@ -1,13 +1,15 @@
-<h1> Projects </h1>
+<h1> Users </h1>
 <p> Welcome, <%= current_user.firstname %>
 
-<% current_user.projects.each do |project| %>
-  <h2> <a href="/projects/<%=project.id%>"><%= project.title%></a></h2>
+<% @projects.each do |project| %>
+  <h2> <%= project.title%></h2>
   <h3> <%= project.module%></h3>
+  <p> <%= project.user.lastname%>, <%= project.user.firstname%></p>
   <div>
     <%= project.description %>
     <br>
     <a> <%project.github%> </a>
   </div>
   <br><br><br>
+
 <% end %>

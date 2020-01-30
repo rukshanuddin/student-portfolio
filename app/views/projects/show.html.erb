@@ -3,10 +3,11 @@
 <br><br>
 <p><%= @project.description %></p>
 <p><a><%= @project.github%></a></p>
-
+<% if @project.user.id == current_user.id%>
 <form method="post" action="/projects/<%=@project.id%>/delete">
   <input id="hidden" type="hidden" name="_method" value="DELETE">
   <input type="submit" value="Delete Project">
 </form>
 
 <a href="/projects/<%=@project.id%>/edit">Edit Project </a>
+<%end%>
