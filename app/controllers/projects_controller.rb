@@ -20,8 +20,8 @@ class ProjectsController < ApplicationController
       if params[:github] == "" || params[:description] == "" || params[:module] == "" || params[:title] == ""
         redirect to "/projects/new"
       else
-        
-        @project = Project.create(:title => params[:title], :module => params[:module], :github => params[:github], :description => params[:description], :user_id => current_user.id)
+        binding.pry
+        @project = current_user.projects.build(params)
         if @project.save
           redirect to "/projects/#{@project.id}"
         else
@@ -46,7 +46,7 @@ class ProjectsController < ApplicationController
   get '/projects/:id/edit' do
     if logged_in?
       @project = Project.find_by_id(params[:id])
-      if @project && @project.user == current_user
+      if authorized_to_edit?(@project)
         erb :'projects/edit.html'
       else
         redirect to '/projects'

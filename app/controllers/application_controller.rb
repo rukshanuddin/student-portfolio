@@ -17,6 +17,11 @@ class ApplicationController < Sinatra::Base
   end
   helpers do
 
+    def authorized_to_edit?(project)
+      project.user_id == current_user.id
+    end
+
+
     def logged_in?
       !!current_user
     end
