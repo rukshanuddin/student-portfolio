@@ -1,6 +1,9 @@
 <h1> Users </h1>
+<% if logged_in?%>
 <p> Welcome, <%= current_user.firstname %>! Here is a handy list of all projects, by all students<p>
-
+<%else %>
+<p>Here is a handy list of all projects, by all students!<p>
+<%end%>
 <% @projects.each do |project| %>
   <h2> <%= project.title%></h2>
   <h3> <%= project.module%></h3>

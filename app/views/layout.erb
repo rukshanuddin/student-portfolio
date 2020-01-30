@@ -22,9 +22,15 @@
         <small>&copy; 2020 <strong>StudentPortfolio</strong></small>
         <% if logged_in?%>
         <div class="navbar">
-          <a href="/home" class="active">Home</a>
+          <a href="/home">Home</a>
           <a href="/projects/new">New Project</a>
           <a href="/logout">Logout</a>
+        </div>
+        <%else%>
+        <div class="navbar">
+          <a href="/">Welcome Page</a>
+          <a href="/all">All Projects</a>
+          <a href="/login">Login</a>
         </div>
         <%end%>
       </footer>
