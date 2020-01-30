@@ -11,7 +11,10 @@ class ApplicationController < Sinatra::Base
   get '/' do
     erb :welcome
   end
-
+  get '/all' do
+    @projects = Project.all
+    erb :'users/all'
+  end
   helpers do
 
     def logged_in?

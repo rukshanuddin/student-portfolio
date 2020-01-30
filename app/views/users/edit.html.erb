@@ -1,9 +1,0 @@
-<h2> Edit User Info </h2>
-
-<form method="post" action="/users/<%=@user.id%>">
-  <input id="hidden" type="hidden" name="_method" value="PATCH">
-  <input type="text" name="firstname" value="<%= @user.firstname %>">
-  <input type="text" name="lastname" value="<%= @user.lastname %>">
-  <input type="text" name="username" value="<%= @user.username%>%">
-  <input type="submit" value="submit">
-</form>
