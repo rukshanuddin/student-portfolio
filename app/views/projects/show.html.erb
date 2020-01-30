@@ -1,5 +1,7 @@
-<h1><%= @project.title %></h1>
-<p>A project by <%=@project.user.firstname%> <%@project.user.lastname%></p>
+<h1><a href="/projects/<%=@project.id%>"><%= @project.title %></a></h1>
+<p>A project by <%=@project.user.firstname%> <%=@project.user.lastname%></p>
+<p>a.k.a. <a href="http://github.com/<%=@project.user.username%>"><b><%=@project.user.username%></b></a></p>
+
 <h3><%= @project.module%></h3>
 <br>
 <p><%= @project.description %></p>

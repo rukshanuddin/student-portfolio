@@ -1,18 +1,18 @@
 <h1> Users </h1>
 <% if logged_in?%>
-<p> Welcome, <%= current_user.firstname %>! Here is a handy list of all projects, by all students<p>
+    <p> Welcome, <%= current_user.firstname %>! Here is a handy list of all projects, by all students<p>
 <%else %>
-<p>Here is a handy list of all projects, by all students!<p>
+    <p>Here is a handy list of all projects, by all students!<p>
 <%end%>
-<% @projects.each do |project| %>
-  <h2> <%= project.title%></h2>
-  <h3> <%= project.module%></h3>
-  <p> <%= project.user.lastname%>, <%= project.user.firstname%></p>
-  <div>
-    <%= project.description %>
-    <br>
-    <a> <%project.github%> </a>
-  </div>
-  <br><br><br>
+    <% @projects.each do |project| %>
+      <h2> <a href="/projects/<%=project.id%>"><%= project.title%></a></h2>
+      <h3> <%= project.module%></h3>
+      <p> <%= project.user.lastname%>, <%= project.user.firstname%></p>
+      <div>
+        <p><%= project.description %></p>
+        <br>
+        <p><a href="<%=project.github%>"> <%= project.github%> </a></p>
+      </div>
+      <br><br><br>
 
-<% end %>
+    <% end %>
