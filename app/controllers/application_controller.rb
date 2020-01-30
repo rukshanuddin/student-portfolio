@@ -20,7 +20,12 @@ class ApplicationController < Sinatra::Base
     def authorized_to_edit?(project)
       project.user_id == current_user.id
     end
-
+    
+    def redirect_to_login
+      if !logged_in? 
+        redirect to '/login'
+      end
+    end
 
     def logged_in?
       !!current_user

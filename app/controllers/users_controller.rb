@@ -1,12 +1,9 @@
 class UsersController < ApplicationController
 
   get '/users' do
-    if logged_in?
-      @projects = Project.all
-      erb :'users/all'
-    else
-      redirect to '/login'
-    end
+    redirect_to_login
+    @projects = Project.all
+    erb :'users/all'
   end
 
   get '/signup' do
@@ -18,12 +15,9 @@ class UsersController < ApplicationController
   end
 
   get '/home' do
-    if !logged_in?
-      redirect to '/login'
-    else
-      @user = current_user
-      erb :'users/index.html'
-    end
+    redirect_to_login
+    @user = current_user
+    erb :'users/index.html'
   end
 
   post '/signup' do

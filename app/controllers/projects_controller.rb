@@ -1,26 +1,19 @@
 class ProjectsController < ApplicationController
   get '/projects' do
-    if logged_in?
-      erb :'projects/index.html'
-    else
-      redirect to '/login'
-    end
+    redirect_to_login
+    erb :'projects/index.html'
   end
 
   get '/projects/new' do
-    if logged_in?
-      erb :'projects/new.html'
-    else
-      redirect to '/login'
-    end
+    redirect_to_login
+    erb :'projects/new.html'
   end
 
   post '/projects' do
-    if logged_in?
+    redirect_to_login
       if params[:github] == "" || params[:description] == "" || params[:module] == "" || params[:title] == ""
         redirect to "/projects/new"
       else
-        binding.pry
         @project = current_user.projects.build(params)
         if @project.save
           redirect to "/projects/#{@project.id}"
@@ -28,36 +21,27 @@ class ProjectsController < ApplicationController
           redirect to "/projects/new"
         end
       end
-    else
-      redirect to '/login'
-    end
   end
 
   get '/projects/:id' do
-    if logged_in?
-      @project = Project.find_by_id(params[:id])
-      redirect to '/projects' if @project == nil
-      erb :'projects/show.html'
-    else
-      redirect to '/login'
-    end
+    redirect_to_login
+    @project = Project.find_by_id(params[:id])
+    redirect to '/projects' if @project == nil
+    erb :'projects/show.html'
   end
 
   get '/projects/:id/edit' do
-    if logged_in?
-      @project = Project.find_by_id(params[:id])
-      if authorized_to_edit?(@project)
-        erb :'projects/edit.html'
-      else
-        redirect to '/projects'
-      end
+    redirect_to_login
+    @project = Project.find_by_id(params[:id])
+    if authorized_to_edit?(@project)
+      erb :'projects/edit.html'
     else
-      redirect to '/login'
+      redirect to '/projects'
     end
   end
 
   patch '/projects/:id' do
-    if logged_in?
+    redirect_to_login
       if params[:title] == ""
         redirect to "/projects/#{params[:id]}/edit"
       else
@@ -72,23 +56,17 @@ class ProjectsController < ApplicationController
           redirect to '/projects'
         end
       end
-    else
-      redirect to '/login'
-    end
+ 
   end
 
 
   delete '/projects/:id/delete' do
-    if logged_in?
-      
-      @project = Project.find_by_id(params[:id])
-      if @project && @project.user == current_user
-        @project.delete
-      end
-      redirect to '/projects'
-    else
-      redirect to '/login'
+    redirect_to_login
+    @project = Project.find_by_id(params[:id])
+    if @project && @project.user == current_user
+      @project.delete
     end
+    redirect to '/projects'
   end
 
 end
