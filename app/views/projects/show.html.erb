@@ -1,13 +1,14 @@
 <h1><%= @project.title %></h1>
+<p>A project by <%=@project.user.firstname%> <%@project.user.lastname%></p>
 <h3><%= @project.module%></h3>
-<br><br>
+<br>
 <p><%= @project.description %></p>
-<p><a><%= @project.github%></a></p>
+<p><%= @project.github%></p>
 <% if @project.user.id == current_user.id%>
 <form method="post" action="/projects/<%=@project.id%>/delete">
   <input id="hidden" type="hidden" name="_method" value="DELETE">
   <input type="submit" value="Delete Project">
 </form>
-
+<br>
 <a href="/projects/<%=@project.id%>/edit">Edit Project </a>
 <%end%>
